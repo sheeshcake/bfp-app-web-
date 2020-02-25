@@ -1,5 +1,5 @@
 <?php
-    include "../includes/connect.php";
+    include "connect.php";
     if(isset($_POST['type'])){
         if($_POST['type'] == "check"){
             $dept_id = $_POST['id'];

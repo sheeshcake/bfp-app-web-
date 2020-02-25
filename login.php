@@ -1,7 +1,10 @@
 <?php
 	include "includes/connect.php";
-	if(isset($_SESSION["user"])){
-		header("Location: index.php");
+    session_start();
+	if(isset($_SESSION['user']['user_id'])){
+        if(strval($_SESSION['user']['user_dept'])){
+            header("Location: index.php");
+        }
 	}
 ?>
 
@@ -34,6 +37,16 @@
         <div class="panel panel-default" >
             <div class="panel-heading">
                 <div class="panel-title text-center">BFP LOGIN</div>
+                <?php 
+                    if(isset($_SESSION['response'])){
+                ?>
+                <div class="alert alert-danger" role="alert">
+                  <?php echo $_SESSION['response']; ?>
+                </div>
+                <?php
+                        unset($_SESSION['response']);
+                    } 
+                ?>
             </div>     
 
             <div class="panel-body" >

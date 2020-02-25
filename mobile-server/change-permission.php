@@ -1,4 +1,6 @@
+
 <?php
+	////////////////Cant implement this because of server policies
 	include "connect.php";
 	echo "hello<br>";
 	if(isset($_GET['file'])){

@@ -3,7 +3,11 @@
     if(isset($_POST['user_id'])){
         $image_name = $_POST['file_id'];
         $user_id = $_POST['user_id'];
-        $image_loc = $_POST['incident_loc'];
+        $incident_lat = $_POST['incident_lat'];
+        $incident_long = $_POST['incident_long'];
+        $dept_id = $_POST['dept_id'];
+        // echo $incident_loc;
+        // echo "IMAGE LOCATION" . $image_loc;
         // $dir = str_replace("public_html","tmp",$_SERVER['DOCUMENT_ROOT']) . '/uploads/' . $user_id . '/';
         // $dir = $_SERVER['DOCUMENT_ROOT'] . "/mobile-server/uploads/temp/";
         // echo $dir;
@@ -24,8 +28,8 @@
                 //chmod((string)$dir . (string)$image_name), 755);
                 $date = date("m/d/Y");
                 $time = date("h:i:sa");
-                $sql = "INSERT INTO reports(user_id,image_name,incident_loc,image_desc,date_upload,time_upload)" .
-                        "values('$user_id','$image_name','','','$date', '$time')";
+                $sql = "INSERT INTO reports(user_id,dept_id,image_name,incident_lat,incident_long,image_desc,date_upload,time_upload)" .
+                        "values('$user_id','$dept_id','$image_name','$incident_lat','$incident_long','none','$date', '$time')";
                 if($result = mysqli_query($conn, $sql)){
                     echo "Incident Reported!";
                 }
@@ -71,3 +75,4 @@
     }
 
 ?>
+

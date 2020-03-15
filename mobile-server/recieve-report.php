@@ -26,15 +26,16 @@
             try{
                 // rename((string)$location, (string)$dir . (string)$image_name);
                 //chmod((string)$dir . (string)$image_name), 755);
+
                 $date = date("m/d/Y");
                 $time = date("h:i:sa");
                 $sql = "INSERT INTO reports(user_id,dept_id,image_name,incident_lat,incident_long,image_desc,date_upload,time_upload)" .
                         "values('$user_id','$dept_id','$image_name','$incident_lat','$incident_long','none','$date', '$time')";
-                if($result = mysqli_query($conn, $sql)){
+                try{
+                    $result = mysqli_query($conn, $sql);
                     echo "Incident Reported!";
-                }
-                else{
-                    echo "Error on Query";
+                }catch(Exception $e){
+                    echo "ERROR!" . $e;
                 }
             }
             catch(Exception $e){

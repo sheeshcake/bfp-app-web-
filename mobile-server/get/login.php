@@ -46,31 +46,33 @@ $('#login_btn').click(function(){
                 'password': pass
             },
             success: function(response) {
-                try{//filtering accounts if its admin or not
+                try{
                     try{
                         var profile_data = JSON.parse(response.toString());
                         console.log(response);
                         document.getElementById("login").style.display = "none";
-                        if(profile_data.role == "fireman"){
-                            document.getElementById("fireman").style.display = "block";
-                        }   
-                        else if(profile_data.role == "admin"){
-                            document.getElementById("admin").style.display = "block";
-                        }
-                        else{
-                            document.getElementById("navigation").style.display ="block";
-                            $.ajax({
-                                url: "http://wordpresssample11.000webhostapp.com/mobile-server/get/citizen.php",
-                                method: "POST",
-                                data:{'u_reg_id': profile_data.u_reg_id},
-                                success: function(data){
-                                    console.log(data);
-                                    console.log(profile_data.u_reg_id);
-                                    $("#container").html("");
-                                    $("#container").html(data);
-                                }
-                            })
-                        }
+                        document.getElementById("navigation").style.display ="block";
+                        $("#role").val(profile_data.role);
+                        $("#u_reg_id").val(profile_data.u_reg_id);
+                        $.ajax({
+                            url: "http://wordpresssample11.000webhostapp.com/mobile-server/get/" + profile_data.role + ".php",
+                            method: "POST",
+                            data:{'u_reg_id': profile_data.u_reg_id},
+                            success: function(data){
+                                // console.log(profile_data);
+                                console.log(profile_data.u_reg_id);
+                                $("#container").html("");
+                                $("#container").html(data);
+                            }
+                        })
+                        $.ajax({
+                            url: "http://wordpresssample11.000webhostapp.com/mobile-server/get/" + profile_data.role + "_nav.php",
+                            method: "GET",
+                            success: function(data){
+                                $("#navs").html("");
+                                $("#navs").html(data);
+                            }
+                        });
                     }
                     catch(e){
                         alert(response);

@@ -1,3 +1,9 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+
 <?php
 	include "../../includes/connect.php";
 
@@ -6,6 +12,7 @@
 		$sql = "SELECT * FROM reports WHERE user_id = '$user_id'";
 		$result = mysqli_query($conn, $sql);
 		$counter = 0;
+		// echo $user_id;
 ?>
 <script type="text/javascript">
 	var locations = [ 

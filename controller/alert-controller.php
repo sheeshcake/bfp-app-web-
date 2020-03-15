@@ -3,7 +3,7 @@
     if(isset($_POST['type'])){
         if($_POST['type'] == "check"){
             $dept_id = $_POST['id'];
-            $sql = "SELECT * FROM reports WHERE is_seen = 'false' AND dept_id='$dept_id'";
+            $sql = "SELECT * FROM reports INNER JOIN user_registration ON reports.user_id=user_registration.u_reg_id WHERE is_seen = 'false' AND dept_id='$dept_id'";
             $result = mysqli_query($conn, $sql);
             if(mysqli_num_rows($result) > 0){
                 echo json_encode($result->fetch_assoc());

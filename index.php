@@ -22,9 +22,6 @@
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-      
-    </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfNafBUY8TVgLcPMCPISzgEVnSSEIU1XQ&callback=initMap"></script>
     <script async defer type="text/javascript" src="https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBfNafBUY8TVgLcPMCPISzgEVnSSEIU1XQ"></script>
     <link rel="shortcut icon" href="">
@@ -157,6 +154,7 @@
                   rep_data = JSON.parse(data);
                   $('#myModal').modal('show');
                   // $('#data').html();
+                  console.log(rep_data.image_name);
                   add_map(rep_data);
                 }
                 catch(e){
@@ -191,6 +189,21 @@
           map: map,
           title: 'Hello World!'
         });
+        <?php
+          $sql = "SELECT * FROM hydrants";
+          $result = mysqli_query($conn, $sql);
+          while($hydrants_data = $result -> fetch_assoc()){
+        ?>
+              var hydrant = <?php echo "{lat: " . $hydrants_data['hydrant_lat'] . ", lng:" . $hydrants_data['hydrant_long'] . "}"; ?>;
+              var marker = new google.maps.Marker({
+                position: hydrant,
+                map: map,
+                icon: "images/hydrant.png",
+                title: 'Hello World!'
+              });
+        <?php
+          }
+        ?>
         var geocoder;
         geocoder = new google.maps.Geocoder();
         geocoder.geocode(
@@ -261,8 +274,10 @@
               }
           }
         );
-        console.log(incident_formatted_address);
-        var contentString = '<div><p style="color: black">' + incident_formatted_address + '</p>' + '<img style="width: 300px" src="mobile-server/uploads/temp/' + data.image_name + '"></div>';
+        console.log(incident_formatted_address + data.image_name);
+        var contentString = '<div><p style="color: black">' + incident_formatted_address + '</p>' + 
+        '<p style="color: black">Reported By: ' + data.first_name + " " + data.last_name + '</p>' +
+        '<img style="width: 300px" src="mobile-server/uploads/temp/' + data.image_name + '"></div>';
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });

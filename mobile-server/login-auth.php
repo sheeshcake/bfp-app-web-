@@ -18,6 +18,13 @@
 				echo "ERROR!!!";
 			}
 		}
+		else if($row['role'] == "fireman"){
+			$id = $row['u_reg_id'];
+			$sql2 = "SELECT * FROM user_registration INNER JOIN users ON users.u_reg_id=user_registration.u_reg_id WHERE users.u_reg_id = '$id'";
+			$result2 = mysqli_query($conn, $sql2);
+			$row2 = $result2 -> fetch_assoc();
+			echo json_encode($row2);
+		}
 		else if($row['role'] == "citizen"){
 			$id = $row['u_reg_id'];
 			$sql2 = "SELECT * FROM user_registration INNER JOIN users ON users.u_reg_id=user_registration.u_reg_id WHERE users.u_reg_id = '$id'";
@@ -34,6 +41,9 @@
 			else{
 				echo "ERROR!!!";
 			}
+		}
+		else{
+			echo "Username or Password is Incorrect!";
 		}
 	}
 	else{
